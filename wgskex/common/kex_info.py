@@ -15,3 +15,14 @@ class KexInfo(BaseModel):
         if not WG_PUBKEY_PATTERN.match(value):
             raise ValueError("public_key must be a valid WireGuard public key")
         return value
+
+
+class KexResult(BaseModel):
+    status: str
+    message: Optional[str] = None
+
+    @validator("status")
+    def validate_status(cls, value):
+        if value not in ["OK", "error"]:
+            raise ValueError("")
+        return value
