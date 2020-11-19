@@ -5,11 +5,18 @@ This tool is intended to facilitate running BATMAN over VXLAN over WireGuard as 
 
 ## Installation
 
-* TBA
+This tool can be installed using `pip` (optionally, but suggested inside a venv) after the source has been unpacked/cloned:
+```
+pip install .
+```
 
 ## Configuration
 
-* TBA
+There are no configuration options (yet)
+
+## Running the worker
+
+TBA
 
 ## Running the frontend
 
