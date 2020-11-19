@@ -1,3 +1,3 @@
-from wgskex.common.kex_info import KexInfo
+from wgskex.common.kex_info import KexInfo, KexResult
 
-__all__ = ["KexInfo"]
+__all__ = ["KexInfo", "KexResult"]
