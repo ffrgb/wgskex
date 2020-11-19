@@ -1,0 +1,19 @@
+name: flake8
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+    - name: Install project
+      run: |
+        pip install .
+    - name: Setup flake8 annotations
+      uses: rbialon/flake8-annotations@v1
+    - name: Run flake8
+      run: |
+        pip install flake8
+        flake8 . --count --max-line-length=120 --statistics
