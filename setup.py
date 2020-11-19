@@ -9,6 +9,11 @@ setup(
     license="ISC",
     url="https://github.com/ffrgb/wgskex",
     packages=find_packages(exclude="tests"),
-    install_requires=["FastAPI", "pydantic", "pyroute2"],
+    install_requires=["FastAPI", "pydantic", "pyroute2", "pyzmq"],
     setup_requires=["wheel"],
+    entry_points={
+        "console_scripts": [
+            "worker=wgskex.worker.main:main",
+        ],
+    },
 )
