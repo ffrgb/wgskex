@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+#
+# Build Debian package using https://github.com/spotify/dh-virtualenv
+#
+
+# assume we only have one package
+PACKAGE_NAME:=`dh_listpackages`
+
+override_dh_systemd_enable:
+	dh_systemd_enable --name=wgskex-frontend
+	dh_systemd_enable --name=wgskex-worker
+
+override_dh_installinit:
+	dh_installinit --name=wgskex-frontend
+	dh_installinit --name=wgskex-worker
+
+# we don't really want to strip the symbols from our object files.
+override_dh_strip:
+
+override_dh_shlibdeps:
+	dh_shlibdeps -X/pyzmq.libs
+
+override_dh_virtualenv:
+	dh_virtualenv --python python3
+
+# We are restricted to compat level 9 (because xenial), so have to
+# enable the systemd bits manually.
+%:
+	dh $@ --with python-virtualenv --with systemd

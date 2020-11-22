@@ -1,0 +1,13 @@
+[Unit]
+Description=WireGuard Simple Kex Exchange - frontend
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/venvs/wgskex/bin/uvicorn wgskex.frontend:app
+User=nobody
+RestartSec=5
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

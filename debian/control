@@ -1,0 +1,27 @@
+Source: wgskex
+Section: contrib/python
+Priority: extra
+Maintainer: Markus Hauschild <markus@moepman.eu>
+Build-Depends:
+ debhelper (>= 9),
+ dh-systemd,
+ dh-virtualenv (>= 1.1),
+ python3-dev,
+ python3 (>= 3.7.0),
+ python3-setuptools,
+ python3-pip,
+ python3-venv,
+Standards-Version: 3.9.8
+Homepage: https://github.com/moepman/wgskex
+
+Package: wgskex
+Architecture: amd64
+Provides: wgskex
+Pre-Depends:
+ dpkg (>= 1.16.1),
+ python3 (>= 3.7.0),
+ ${misc:Pre-Depends},
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
+Description: WireGuard Simple Key Exchange

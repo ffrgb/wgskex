@@ -1,5 +1,10 @@
 .idea/
 .mypy_cache/
+debian/files
+debian/wgskex/
+debian/*.debhelper
+debian/*.log
+debian/*.substvars
 venv/
 *.egg-info/
 *.pyc
