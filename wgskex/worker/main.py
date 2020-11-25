@@ -10,7 +10,7 @@ from wgskex.worker.netlink import WireGuardClient, link_handler
 logging.basicConfig(format="%(levelname)s: %(message)s", level="DEBUG")
 
 
-def main():
+def main() -> None:
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     # TODO make the port configurable

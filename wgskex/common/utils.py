@@ -1,8 +1,9 @@
 import ipaddress
 import re
+from typing import Optional
 
 
-def mac2eui64(mac, prefix=None):
+def mac2eui64(mac: str, prefix: Optional[str] = None) -> Optional[str]:
     """
     Convert a MAC address to a EUI64 identifier
     or, with prefix provided, a full IPv6 address
@@ -20,4 +21,4 @@ def mac2eui64(mac, prefix=None):
             euil = int("0x{}".format(eui64), 16)
             return "{}/{}".format(net[euil], net.prefixlen)
         except Exception:  # pylint: disable=broad-except
-            return
+            return None

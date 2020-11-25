@@ -1,4 +1,5 @@
 import logging
+from typing import Dict
 
 import zmq
 from fastapi import FastAPI
@@ -17,7 +18,7 @@ logging.basicConfig(format="%(levelname)s: %(message)s", level="DEBUG")
 
 
 @app.post("/api/v1/wg/key/exchange")
-def wg_key_exchange(kex_info: KexInfo):
+def wg_key_exchange(kex_info: KexInfo) -> Dict:
     """Submit a public key to be installed into a given mesh domain"""
     logging.debug(f"Received request for domain {kex_info.domain} with public key: {kex_info.public_key}.")
     socket.send_pyobj(kex_info)
