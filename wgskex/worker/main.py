@@ -30,6 +30,7 @@ def main() -> None:
                 # TODO possible problems not handled via exception?
                 socket.send_pyobj(KexResult(status="OK"))
             except pyroute2.netlink.exceptions.NetlinkError as nl_error:
+                logging.warning(f"Link handler Exception: {nl_error}")
                 socket.send_pyobj(KexResult(status="error", message=f"exception processing netlink update: {nl_error}"))
 
         else:
