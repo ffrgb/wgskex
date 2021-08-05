@@ -1,3 +1,4 @@
+.eggs/
 .idea/
 .mypy_cache/
 debian/files
