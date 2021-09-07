@@ -84,6 +84,7 @@ def bridge_fdb_handler(client: WireGuardClient) -> Dict:
     with IPRoute() as ip:
         return ip.fdb(
             "del" if client.remove else "append",
+            # FIXME this list may be empty if the interface is not existing
             ifindex=ip.link_lookup(ifname=client.vx_interface)[0],
             lladdr="00:00:00:00:00:00",
             dst=re.sub(r"/\d+$", "", client.lladdr),
