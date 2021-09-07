@@ -1,4 +1,5 @@
 import hashlib
+import logging
 import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -8,6 +9,10 @@ from typing import Dict, List
 from pyroute2 import WireGuard, IPRoute
 
 from wgskex.common.utils import mac2eui64
+
+logger = logging.getLogger(__name__)
+# TODO make loglevel configurable
+logger.setLevel("DEBUG")
 
 
 @dataclass
