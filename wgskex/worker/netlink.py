@@ -138,7 +138,7 @@ def find_stale_wireguard_clients(wg_interface: str) -> List[str]:
         stale_clients = [
             client.get_attr("WGPEER_A_PUBLIC_KEY").decode("utf-8")
             for client in all_clients
-            if client.get_attr('WGPEER_A_LAST_HANDSHAKE_TIME').get("tv_sec", int()) < three_minutes_ago
+            if client.get_attr("WGPEER_A_LAST_HANDSHAKE_TIME").get("tv_sec", int()) < three_minutes_ago
         ]
 
         return stale_clients
