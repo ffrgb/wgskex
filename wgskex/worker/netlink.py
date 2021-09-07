@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from textwrap import wrap
 from typing import Dict, List
 
-from pyroute2 import WireGuard, IPRoute
+from pyroute2 import IPRoute, NDB, WireGuard
 
 from wgskex.common.utils import mac2eui64
 
@@ -112,19 +112,30 @@ def route_handler(client: WireGuardClient) -> Dict:
         )
 
 
-def find_stale_wireguard_clients(wg_interface: str) -> List:
+def find_wireguard_domains() -> List[str]:
+    ndb = NDB()
+
+    # ndb.interfaces[{"kind": "wireguard"}]] seems to trigger https://github.com/svinota/pyroute2/issues/737
+    interfaces = [iface.get("ifname", "") for iface in ndb.interfaces.values() if iface.get("kind", "") == "wireguard"]
+    result = [iface.removeprefix("wg-") for iface in interfaces if iface.startswith("wg-")]
+
+    return result
+
+
+def find_stale_wireguard_clients(wg_interface: str) -> List[str]:
     with WireGuard() as wg:
 
-        clients = wg.info(wg_interface)[0].WGDEVICE_A_PEERS.value
+        clients = []
+        infos = wg.info(wg_interface)
+        for info in infos:
+            clients.extend(info.get_attr("WGDEVICE_A_PEERS"))
 
-        three_hours_ago = (datetime.now() - timedelta(hours=3)).timestamp()
+        three_minutes_ago = (datetime.now() - timedelta(minutes=3)).timestamp()
 
-        stale_clients = []
-        for client in clients:
-            latest_handshake = client.WGPEER_A_LAST_HANDSHAKE_TIME["tv_sec"]
-            if latest_handshake < int(three_hours_ago):
-                stale_clients.append(
-                    client.WGPEER_A_PUBLIC_KEY["value"].decode("utf-8")
-                )
+        stale_clients = [
+            client.get_attr("WGPEER_A_PUBLIC_KEY").decode("utf-8")
+            for client in clients
+            if client.get_attr('WGPEER_A_LAST_HANDSHAKE_TIME').get("tv_sec", int()) < three_minutes_ago
+        ]
 
         return stale_clients
