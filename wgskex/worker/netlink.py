@@ -126,16 +126,18 @@ def find_wireguard_domains() -> List[str]:
 def find_stale_wireguard_clients(wg_interface: str) -> List[str]:
     with WireGuard() as wg:
 
-        clients = []
+        all_clients = []
         infos = wg.info(wg_interface)
         for info in infos:
-            clients.extend(info.get_attr("WGDEVICE_A_PEERS"))
+            clients = info.get_attr("WGDEVICE_A_PEERS")
+            if clients is not None:
+                all_clients.extend(clients)
 
         three_minutes_ago = (datetime.now() - timedelta(minutes=3)).timestamp()
 
         stale_clients = [
             client.get_attr("WGPEER_A_PUBLIC_KEY").decode("utf-8")
-            for client in clients
+            for client in all_clients
             if client.get_attr('WGPEER_A_LAST_HANDSHAKE_TIME').get("tv_sec", int()) < three_minutes_ago
         ]
 
