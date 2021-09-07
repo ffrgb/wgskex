@@ -3,8 +3,7 @@ Section: contrib/python
 Priority: extra
 Maintainer: Markus Hauschild <markus@moepman.eu>
 Build-Depends:
- debhelper (>= 9),
- dh-systemd,
+ debhelper (>= 10),
  dh-virtualenv (>= 1.1),
  python3-dev,
  python3 (>= 3.7.0),
