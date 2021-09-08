@@ -67,14 +67,14 @@ def wg_flush_stale_peers(domain: str) -> List[Dict]:
 
 
 # pyroute2 stuff
-def link_handler(client: WireGuardClient) -> Dict:
+def link_handler(client: WireGuardClient) -> Dict[str, Dict]:
     results = {}
 
     results.update({"Wireguard": wireguard_handler(client)})
     try:
         results.update({"Route": route_handler(client)})
     except Exception as e:
-        results.update({"Route": e})
+        results.update({"Route": {"Exception": e}})
     results.update({"Bridge FDB": bridge_fdb_handler(client)})
 
     return results
