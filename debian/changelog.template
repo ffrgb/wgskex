@@ -1,0 +1,5 @@
+wgskex (#VERSION) stable; urgency=medium
+
+  * released via dh-virtualenv
+
+ -- Markus Hauschild <markus@moepman.eu>  #DATE

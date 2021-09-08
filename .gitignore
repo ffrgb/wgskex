@@ -1,6 +1,7 @@
 .eggs/
 .idea/
 .mypy_cache/
+debian/changelog
 debian/debhelper-build-stamp
 debian/files
 debian/wgskex/
