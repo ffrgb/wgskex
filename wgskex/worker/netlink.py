@@ -114,13 +114,13 @@ def route_handler(client: WireGuardClient) -> Dict:
 
 
 def find_wireguard_domains() -> List[str]:
-    ndb = NDB()
+    with NDB() as ndb:
 
-    # ndb.interfaces[{"kind": "wireguard"}]] seems to trigger https://github.com/svinota/pyroute2/issues/737
-    interfaces = [iface.get("ifname", "") for iface in ndb.interfaces.values() if iface.get("kind", "") == "wireguard"]
-    result = [iface.removeprefix("wg-") for iface in interfaces if iface.startswith("wg-")]
+        # ndb.interfaces[{"kind": "wireguard"}]] seems to trigger https://github.com/svinota/pyroute2/issues/737
+        interfaces = [iface.get("ifname", "") for iface in ndb.interfaces.values() if iface.get("kind", "") == "wireguard"]
+        result = [iface.removeprefix("wg-") for iface in interfaces if iface.startswith("wg-")]
 
-    return result
+        return result
 
 
 def find_stale_wireguard_clients(wg_interface: str) -> List[str]:
