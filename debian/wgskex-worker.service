@@ -5,6 +5,9 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/opt/venvs/wgskex/bin/worker
+CapabilityBoundingSet=CAP_NET_ADMIN
+AmbientCapabilities=CAP_NET_ADMIN
+User=wgskex
 RestartSec=5
 Restart=always
 

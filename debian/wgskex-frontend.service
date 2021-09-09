@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/opt/venvs/wgskex/bin/uvicorn wgskex.frontend:app
-User=nobody
+User=wgskex
 RestartSec=5
 Restart=always
 

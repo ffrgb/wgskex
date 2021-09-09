@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+# create a user to run as (code stolen from dnsmasq)
+if [ "$1" = "configure" ]; then
+  if [ -z "`id -u wgskex 2> /dev/null`" ]; then
+    adduser --system  --home /opt/venvs/wgskex --gecos "wgskex" \
+            --no-create-home --disabled-password \
+            --quiet wgskex || true
+  fi
+fi
