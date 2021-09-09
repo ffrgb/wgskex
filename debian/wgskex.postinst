@@ -9,3 +9,5 @@ if [ "$1" = "configure" ]; then
             --quiet wgskex || true
   fi
 fi
+
+#DEBHELPER#
