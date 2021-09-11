@@ -108,7 +108,7 @@ def wireguard_handler(client: WireGuardClient) -> Dict:
 def route_handler(client: WireGuardClient) -> Dict:
     with IPRoute() as ip:
         return ip.route(
-            "del" if client.remove else "add",
+            "del" if client.remove else "replace",
             dst=client.lladdr,
             oif=ip.link_lookup(ifname=client.wg_interface)[0],
         )
