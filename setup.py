@@ -41,7 +41,7 @@ setup(
     license="ISC",
     url="https://github.com/ffrgb/wgskex",
     packages=find_packages(exclude="tests"),
-    install_requires=["FastAPI", "pydantic", "pyroute2", "pyzmq", "uvicorn"],
+    install_requires=["FastAPI==0.65.1", "pydantic", "pyroute2", "pyzmq", "uvicorn"],
     setup_requires=["wheel"],
     entry_points={
         "console_scripts": [
