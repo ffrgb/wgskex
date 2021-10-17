@@ -28,7 +28,7 @@ def main() -> None:
     context = zmq.Context()
     socket = context.socket(zmq.REP)
     # TODO make the port configurable
-    socket.bind("tcp://*:5555")
+    socket.bind("tcp://127.0.0.1:5555")
 
     # run background flusher to remove stale clients
     thread = threading.Thread(target=flusher)
