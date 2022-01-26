@@ -119,7 +119,11 @@ def find_wireguard_domains() -> List[str]:
 
         # ndb.interfaces[{"kind": "wireguard"}]] seems to trigger https://github.com/svinota/pyroute2/issues/737
         iface_values = ndb.interfaces.values()
-        interfaces = [iface.get("ifname", "") for iface in iface_values if iface.get("kind", "") == "wireguard"]
+        interfaces = []
+        try:
+            interfaces = [iface.get("ifname", "") for iface in iface_values if iface.get("kind", "") == "wireguard"]
+        except KeyError as ke:
+            logger.exception(ke)
         result = [iface.removeprefix("wg-") for iface in interfaces if iface.startswith("wg-")]
 
         return result
