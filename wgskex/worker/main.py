@@ -1,6 +1,7 @@
 import logging
 import threading
 import time
+from pickle import UnpicklingError
 
 import pyroute2
 import zmq
@@ -35,7 +36,12 @@ def main() -> None:
     thread.start()
 
     while True:
-        message = socket.recv_pyobj()
+        message = None
+        try:
+            message = socket.recv_pyobj()
+        except UnpicklingError as ue:
+            logger.warning(f"Received unpicklable object: {ue}")
+            socket.send_pyobj(KexResult(status="error", message="received invalid request"))
 
         if isinstance(message, KexInfo):
             logger.debug(f"Received object: {message!r}")
